@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HandyGo — Prototype</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f5f8fc;color:#10203a}
+.wrap{max-width:1100px;margin:auto;padding:28px}
+header{display:flex;justify-content:space-between;align-items:center;margin-bottom:26px}
+.logo{font-size:28px;font-weight:800;color:#0b6cff}.logo span{color:#19c6e8}
+.btn{border:0;border-radius:12px;padding:12px 18px;background:#0b6cff;color:white;font-weight:700;cursor:pointer}
+.hero{background:linear-gradient(135deg,#0867d9,#12bde0);color:white;border-radius:24px;padding:42px;display:grid;grid-template-columns:1.4fr .8fr;gap:30px;align-items:center}
+.hero h1{font-size:46px;line-height:1.05;margin:0 0 12px}.hero p{font-size:18px;opacity:.92}
+.card{background:white;border-radius:20px;padding:22px;box-shadow:0 10px 30px rgba(0,30,70,.08)}
+.search{display:flex;background:white;border-radius:14px;padding:14px;color:#6d7890;margin-top:22px}
+h2{margin:34px 0 16px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.category{text-align:center;padding:18px 10px}.icon{font-size:28px;margin-bottom:8px}.pros{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.pro{display:flex;flex-direction:column;gap:10px}.avatar{width:58px;height:58px;border-radius:50%;background:#dbeafe;display:grid;place-items:center;font-size:25px}
+.row{display:flex;justify-content:space-between;align-items:center}.muted{color:#6d7890;font-size:14px}
+@media(max-width:800px){.hero{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,1fr)}.pros{grid-template-columns:1fr}.hero h1{font-size:36px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><div class="logo">Handy<span>Go</span></div><button class="btn" onclick="alert('Sign in prototype')">Sign In</button></header>
+<section class="hero">
+<div><h1>Find. Book. Get it Done.</h1><p>Book trusted local pros for repairs, maintenance, cleaning, lawn care and more.</p><div class="search">🔎&nbsp; Search for a service</div></div>
+<div class="card"><h3>Quick booking</h3><p class="muted">Choose a service, pick a pro, select a time, and confirm.</p><button class="btn" onclick="alert('Booking flow prototype')">Book a Service</button></div>
+</section>
+<h2>Browse Services</h2>
+<div class="grid">
+<div class="card category"><div class="icon">🔨</div><b>Handyman</b></div><div class="card category"><div class="icon">⚡</div><b>Electrician</b></div><div class="card category"><div class="icon">🚰</div><b>Plumber</b></div><div class="card category"><div class="icon">🔧</div><b>HVAC</b></div><div class="card category"><div class="icon">🎨</div><b>Painter</b></div><div class="card category"><div class="icon">🧹</div><b>Cleaner</b></div><div class="card category"><div class="icon">🌿</div><b>Lawn Care</b></div><div class="card category"><div class="icon">•••</div><b>More</b></div>
+</div>
+<h2>Available Pros</h2>
+<div class="pros">
+<div class="card pro"><div class="row"><div class="avatar">👨‍🔧</div><b>$50/hr</b></div><div><h3>Mike Johnson ✓</h3><div class="muted">⭐ 4.9 · Handyman · Available nearby</div></div><button class="btn" onclick="alert('Booking Mike Johnson — prototype')">Book Now</button></div><div class="card pro"><div class="row"><div class="avatar">👩‍🔧</div><b>$55/hr</b></div><div><h3>Sarah Davis ✓</h3><div class="muted">⭐ 4.8 · Cleaner · Available nearby</div></div><button class="btn" onclick="alert('Booking Sarah Davis — prototype')">Book Now</button></div><div class="card pro"><div class="row"><div class="avatar">🧰</div><b>$60/hr</b></div><div><h3>Alex Brown ✓</h3><div class="muted">⭐ 4.9 · Plumber · Available nearby</div></div><button class="btn" onclick="alert('Booking Alex Brown — prototype')">Book Now</button></div>
+</div>
+</div>
+</body></html>
