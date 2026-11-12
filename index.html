@@ -5,118 +5,36 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>HandyGo — Prototype</title>
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f5f8fc;color:#10203a}.wrap{max-width:1150px;margin:auto;padding:28px}header{display:flex;justify-content:space-between;align-items:center;margin-bottom:26px}.logo{font-size:28px;font-weight:800;color:#0b6cff}.logo span{color:#19c6e8}.btn{border:0;border-radius:12px;padding:12px 18px;background:#0b6cff;color:white;font-weight:700;cursor:pointer}.btn.secondary{background:#eaf2ff;color:#0b6cff}.hero{background:linear-gradient(135deg,#0867d9,#12bde0);color:white;border-radius:24px;padding:42px;display:grid;grid-template-columns:1.4fr .8fr;gap:30px;align-items:center}.hero h1{font-size:46px;line-height:1.05;margin:0 0 12px}.hero p{font-size:18px;opacity:.92}.card{background:white;border-radius:20px;padding:22px;box-shadow:0 10px 30px rgba(0,30,70,.08)}.search{display:flex;background:white;border-radius:14px;padding:14px;color:#6d7890;margin-top:22px}h2{margin:34px 0 16px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.category{text-align:center;padding:18px 10px;cursor:pointer}.category .muted{margin-top:7px}.icon{font-size:28px;margin-bottom:8px}.pros{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.pro{display:flex;flex-direction:column;gap:10px}.avatar{width:58px;height:58px;border-radius:50%;background:#dbeafe;display:grid;place-items:center;font-size:25px}.row{display:flex;justify-content:space-between;align-items:center}.muted{color:#6d7890;font-size:14px}.formgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.formgrid input,.formgrid select{padding:13px;border:1px solid #d7deea;border-radius:10px;font:inherit}.tabs{display:flex;gap:10px;flex-wrap:wrap}.status{display:inline-block;padding:6px 10px;border-radius:999px;background:#e8f7ed;color:#18733a;font-size:12px;font-weight:700}.timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.step{padding:14px;border-radius:14px;background:#f5f8fc;text-align:center}.nav{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:28px}.nav .card{text-align:center;padding:16px;cursor:pointer}.price{font-size:24px;font-weight:800}.notice{background:#fff8df;border:1px solid #f2df9a;padding:14px;border-radius:14px}.footer{margin:36px 0 10px;text-align:center;color:#6d7890;font-size:13px}@media(max-width:800px){.hero{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,1fr)}.pros{grid-template-columns:1fr}.hero h1{font-size:36px}.formgrid,.timeline{grid-template-columns:1fr}.nav{grid-template-columns:repeat(2,1fr)}}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f5f8fc;color:#10203a}
+.wrap{max-width:1100px;margin:auto;padding:28px}
+header{display:flex;justify-content:space-between;align-items:center;margin-bottom:26px}
+.logo{font-size:28px;font-weight:800;color:#0b6cff}.logo span{color:#19c6e8}
+.btn{border:0;border-radius:12px;padding:12px 18px;background:#0b6cff;color:white;font-weight:700;cursor:pointer}
+.hero{background:linear-gradient(135deg,#0867d9,#12bde0);color:white;border-radius:24px;padding:42px;display:grid;grid-template-columns:1.4fr .8fr;gap:30px;align-items:center}
+.hero h1{font-size:46px;line-height:1.05;margin:0 0 12px}.hero p{font-size:18px;opacity:.92}
+.card{background:white;border-radius:20px;padding:22px;box-shadow:0 10px 30px rgba(0,30,70,.08)}
+.search{display:flex;background:white;border-radius:14px;padding:14px;color:#6d7890;margin-top:22px}
+h2{margin:34px 0 16px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.category{text-align:center;padding:18px 10px}.icon{font-size:28px;margin-bottom:8px}.pros{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.pro{display:flex;flex-direction:column;gap:10px}.avatar{width:58px;height:58px;border-radius:50%;background:#dbeafe;display:grid;place-items:center;font-size:25px}
+.row{display:flex;justify-content:space-between;align-items:center}.muted{color:#6d7890;font-size:14px}
+@media(max-width:800px){.hero{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,1fr)}.pros{grid-template-columns:1fr}.hero h1{font-size:36px}}
 </style>
 </head>
 <body>
 <div class="wrap">
-<header><div class="logo">Handy<span>Go</span></div><div class="tabs"><button class="btn secondary" onclick="show('customer')">Customer</button><button class="btn" onclick="show('pro')">I'm a Pro</button><button class="btn" onclick="alert('Sign in prototype')">Sign In</button></div></header>
-
+<header><div class="logo">Handy<span>Go</span></div><button class="btn" onclick="alert('Sign in prototype')">Sign In</button></header>
 <section class="hero">
-<div><h1>Find. Book. Get it Done.</h1><p>Book trusted local pros for repairs, maintenance, cleaning, lawn care, yard work, car detailing and more.</p><div class="search">🔎&nbsp; Search for a service, pro, or business</div></div>
-<div class="card"><h3>Quick booking</h3><p class="muted">Choose a service, pick a pro, choose a time and confirm your job.</p><button class="btn" onclick="show('booking')">Book a Service</button></div>
+<div><h1>Find. Book. Get it Done.</h1><p>Book trusted local pros for repairs, maintenance, cleaning, lawn care and more.</p><div class="search">🔎&nbsp; Search for a service</div></div>
+<div class="card"><h3>Quick booking</h3><p class="muted">Choose a service, pick a pro, select a time, and confirm.</p><button class="btn" onclick="alert('Booking flow prototype')">Book a Service</button></div>
 </section>
-
-<div class="nav">
-<div class="card" onclick="show('booking')">📅<br><b>Bookings</b></div>
-<div class="card" onclick="show('messages')">💬<br><b>Messages</b></div>
-<div class="card" onclick="show('tracking')">📍<br><b>Track Job</b></div>
-<div class="card" onclick="show('payments')">💳<br><b>Payments</b></div>
-<div class="card" onclick="show('profile')">👤<br><b>Account</b></div>
-</div>
-
 <h2>Browse Services</h2>
 <div class="grid">
-<div class="card category" onclick="showService('Handyman')"><div class="icon">🔨</div><b>Handyman</b></div>
-<div class="card category" onclick="showService('Electrician')"><div class="icon">⚡</div><b>Electrician</b></div>
-<div class="card category" onclick="showService('Plumber')"><div class="icon">🚰</div><b>Plumber</b></div>
-<div class="card category" onclick="showService('HVAC')"><div class="icon">🔧</div><b>HVAC</b></div>
-<div class="card category" onclick="showService('Painter')"><div class="icon">🎨</div><b>Painter</b></div>
-<div class="card category" onclick="showService('Cleaner')"><div class="icon">🧹</div><b>Cleaner</b></div>
-<div class="card category" onclick="showService('Lawn Care')"><div class="icon">🌿</div><b>Lawn Care</b><div class="muted">Mowing · Trimming · Cleanup</div></div>
-<div class="card category" onclick="showService('Car Detailing')"><div class="icon">🚗</div><b>Car Detailing</b><div class="muted">Interior · Exterior · Full</div></div>
+<div class="card category"><div class="icon">🔨</div><b>Handyman</b></div><div class="card category"><div class="icon">⚡</div><b>Electrician</b></div><div class="card category"><div class="icon">🚰</div><b>Plumber</b></div><div class="card category"><div class="icon">🔧</div><b>HVAC</b></div><div class="card category"><div class="icon">🎨</div><b>Painter</b></div><div class="card category"><div class="icon">🧹</div><b>Cleaner</b></div><div class="card category"><div class="icon">🌿</div><b>Lawn Care</b></div><div class="card category"><div class="icon">•••</div><b>More</b></div>
 </div>
-
-<h2>Lawn & Yard Work</h2>
-<div class="grid">
-<div class="card category" onclick="showService('Grass Cutting')"><div class="icon">🌱</div><b>Grass Cutting</b><div class="muted">Mow and edge</div></div>
-<div class="card category" onclick="showService('Grass Trimming')"><div class="icon">✂️</div><b>Grass Trimming</b><div class="muted">Trim edges and overgrowth</div></div>
-<div class="card category" onclick="showService('Yard Cleanup')"><div class="icon">🍃</div><b>Yard Cleanup</b><div class="muted">Leaves and cleanup</div></div>
-<div class="card category" onclick="showService('Full Yard Care')"><div class="icon">🌳</div><b>Full Yard Care</b><div class="muted">Complete lawn service</div></div>
-</div>
-
-<h2>Car Detailing</h2>
-<div class="grid">
-<div class="card category" onclick="showService('Interior Detail')"><div class="icon">🧽</div><b>Interior Detail</b></div>
-<div class="card category" onclick="showService('Exterior Detail')"><div class="icon">🚿</div><b>Exterior Detail</b></div>
-<div class="card category" onclick="showService('Full Car Detail')"><div class="icon">✨</div><b>Full Car Detail</b></div>
-<div class="card category" onclick="showService('Mobile Detailer')"><div class="icon">📍</div><b>Mobile Detailer</b></div>
-</div>
-
 <h2>Available Pros</h2>
 <div class="pros">
-<div class="card pro"><div class="row"><div class="avatar">👨‍🔧</div><b>$50/hr</b></div><div><h3>Mike Johnson ✓</h3><div class="muted">⭐ 4.9 · Handyman · Available nearby</div></div><button class="btn" onclick="startBooking('Mike Johnson')">Book Now</button></div>
-<div class="card pro"><div class="row"><div class="avatar">🌿</div><b>$45/job</b></div><div><h3>GreenLine Lawn Care ✓</h3><div class="muted">⭐ 4.9 · Lawn Care · Available nearby</div></div><button class="btn" onclick="startBooking('GreenLine Lawn Care')">Book Now</button></div>
-<div class="card pro"><div class="row"><div class="avatar">🚗</div><b>$75/job</b></div><div><h3>FreshRide Detailing ✓</h3><div class="muted">⭐ 4.8 · Car Detailing · Mobile</div></div><button class="btn" onclick="startBooking('FreshRide Detailing')">Book Now</button></div>
+<div class="card pro"><div class="row"><div class="avatar">👨‍🔧</div><b>$50/hr</b></div><div><h3>Mike Johnson ✓</h3><div class="muted">⭐ 4.9 · Handyman · Available nearby</div></div><button class="btn" onclick="alert('Booking Mike Johnson — prototype')">Book Now</button></div><div class="card pro"><div class="row"><div class="avatar">👩‍🔧</div><b>$55/hr</b></div><div><h3>Sarah Davis ✓</h3><div class="muted">⭐ 4.8 · Cleaner · Available nearby</div></div><button class="btn" onclick="alert('Booking Sarah Davis — prototype')">Book Now</button></div><div class="card pro"><div class="row"><div class="avatar">🧰</div><b>$60/hr</b></div><div><h3>Alex Brown ✓</h3><div class="muted">⭐ 4.9 · Plumber · Available nearby</div></div><button class="btn" onclick="alert('Booking Alex Brown — prototype')">Book Now</button></div>
 </div>
-
-<h2>Book a Job</h2>
-<div class="card">
-<div class="formgrid">
-<select id="bookService"><option>Handyman</option><option>Grass Cutting</option><option>Grass Trimming</option><option>Yard Cleanup</option><option>Full Yard Care</option><option>Interior Detail</option><option>Exterior Detail</option><option>Full Car Detail</option><option>Plumbing</option><option>Cleaning</option></select>
-<input id="bookDate" type="date"><input id="bookAddress" placeholder="Job address">
-<button class="btn" onclick="createBooking()">Request Booking</button>
-</div><div id="bookingResult" class="muted" style="margin-top:12px"></div>
 </div>
-
-<h2>My Booking</h2>
-<div class="card">
-<div class="row"><div><h3>Upcoming job</h3><div class="muted">Grass Cutting · Local Pro</div></div><span class="status">Confirmed</span></div>
-<div class="timeline" style="margin-top:18px"><div class="step">✓ Requested</div><div class="step">✓ Accepted</div><div class="step">📍 On the way</div><div class="step">○ Completed</div></div>
-<div style="margin-top:18px"><button class="btn" onclick="show('tracking')">Track Pro</button> <button class="btn secondary" onclick="show('messages')">Message Pro</button></div>
-</div>
-
-<h2>Track Your Job</h2>
-<div class="card">
-<div class="row"><div><h3>GreenLine Lawn Care</h3><div class="muted">Your pro is on the way</div></div><span class="status">On the way</span></div>
-<div style="height:180px;background:#eaf2ff;border-radius:16px;margin-top:16px;display:grid;place-items:center;font-size:46px">🗺️<br><span style="font-size:14px;color:#6d7890">Map & live location prototype</span></div>
-</div>
-
-<h2>Messages</h2>
-<div class="card">
-<div class="row"><div><h3>GreenLine Lawn Care</h3><div class="muted">“I’ll be there soon.”</div></div><button class="btn" onclick="alert('Messaging prototype')">Open Chat</button></div>
-</div>
-
-<h2>Payments & Job Summary</h2>
-<div class="card">
-<div class="row"><div><h3>Grass Cutting</h3><div class="muted">Service total</div></div><div class="price">$45</div></div>
-<hr><div class="row"><span>Payment method</span><b>Card ••••</b></div><div class="row" style="margin-top:12px"><span>Payment status</span><span class="status">Ready</span></div>
-<div style="margin-top:18px"><button class="btn" onclick="alert('Secure payment prototype')">Pay Securely</button> <button class="btn secondary" onclick="alert('Refund/cancellation prototype')">Cancellation / Refund</button></div>
-</div>
-
-<h2>Customer & Pro Accounts</h2>
-<div class="grid">
-<div class="card category" onclick="alert('Customer onboarding prototype')"><div class="icon">🏠</div><b>Customer Onboarding</b><div class="muted">Profile, address and booking preferences</div></div>
-<div class="card category" onclick="alert('Pro onboarding prototype')"><div class="icon">🧰</div><b>Pro Onboarding</b><div class="muted">Services, service area and availability</div></div>
-<div class="card category" onclick="alert('Ratings prototype')"><div class="icon">⭐</div><b>Ratings & Reviews</b><div class="muted">Rate completed jobs</div></div>
-<div class="card category" onclick="alert('Notifications prototype')"><div class="icon">🔔</div><b>Notifications</b><div class="muted">Booking and job updates</div></div>
-</div>
-
-<h2>Offer Your Services</h2>
-<div class="card">
-<h3>Add Your Business to HandyGo</h3><p class="muted">Create a pro listing for lawn care, yard work, car detailing, handyman work, or other services.</p>
-<div class="formgrid"><input id="bizName" placeholder="Business name"><input id="bizService" placeholder="Services you offer"><input id="bizArea" placeholder="Service area"><button class="btn" onclick="addBusiness()">Add My Business</button></div>
-<div id="bizResult" class="muted" style="margin-top:12px"></div>
-</div>
-
-<div class="notice" style="margin-top:24px"><b>Prototype note:</b> These screens demonstrate the HandyGo customer/pro experience. Real authentication, database saving, maps, notifications, Stripe payments, Connect payouts, and production booking logic still need to be connected to the backend.</div>
-<div class="footer">HandyGo prototype · Find. Book. Get it Done.</div>
-</div>
-<script>
-function show(name){alert(name.charAt(0).toUpperCase()+name.slice(1)+' screen — prototype')}
-function showService(name){alert(name+' selected — booking flow prototype')}
-function startBooking(pro){alert('Booking '+pro+' — prototype')}
-function createBooking(){const s=document.getElementById('bookService').value;const d=document.getElementById('bookDate').value||'your selected date';const a=document.getElementById('bookAddress').value||'your address';document.getElementById('bookingResult').textContent='Booking requested: '+s+' on '+d+' at '+a+' — prototype only.'}
-function addBusiness(){const n=document.getElementById('bizName').value||'Your business';const s=document.getElementById('bizService').value||'your services';const a=document.getElementById('bizArea').value||'your service area';document.getElementById('bizResult').textContent=n+' is ready to be listed for '+s+' in '+a+' — prototype only.'}
-</script>
 </body></html>
