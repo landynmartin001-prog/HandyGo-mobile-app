@@ -10,7 +10,7 @@
 </head>
 <body>
 <div class="wrap">
-<header><div class="logo"><div class="logo-mark" aria-label="HandyGo logo"><svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 14.2 16 6l10 8.2v11.1a1.7 1.7 0 0 1-1.7 1.7H7.7A1.7 1.7 0 0 1 6 25.3V14.2Z" fill="white" opacity=".98"/><path d="M13.2 21.8h5.6v5.2h-5.6v-5.2Z" fill="#0b6cff"/><path d="m20.7 10.5 2.4 2.4-3.9 3.9-2.4-2.4 3.9-3.9Z" fill="#19c6e8"/><path d="m19.2 16.3-3.1 3.1" stroke="#0b6cff" stroke-width="2.2" stroke-linecap="round"/><path d="m15.5 13.7 2.2 2.2" stroke="#0b6cff" stroke-width="2.2" stroke-linecap="round"/></svg></div><div>Handy<span>Go</span></div><div class="logo-sub">Local pros. Done right.</div></div><div class="tabs"><button class="btn secondary" onclick="show('customer')">Customer</button><button class="btn" onclick="show('pro')">I'm a Pro</button><button class="btn" onclick="alert('Sign in prototype')">Sign In</button></div></header>
+<header><div class="logo"><div class="logo-mark" aria-label="HandyGo logo"><svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 14.2 16 6l10 8.2v11.1a1.7 1.7 0 0 1-1.7 1.7H7.7A1.7 1.7 0 0 1 6 25.3V14.2Z" fill="white" opacity=".98"/><path d="M13.2 21.8h5.6v5.2h-5.6v-5.2Z" fill="#0b6cff"/><path d="m20.7 10.5 2.4 2.4-3.9 3.9-2.4-2.4 3.9-3.9Z" fill="#19c6e8"/><path d="m19.2 16.3-3.1 3.1" stroke="#0b6cff" stroke-width="2.2" stroke-linecap="round"/><path d="m15.5 13.7 2.2 2.2" stroke="#0b6cff" stroke-width="2.2" stroke-linecap="round"/></svg></div><div>Handy<span>Go</span></div><div class="logo-sub">Local pros. Done right.</div></div><div class="tabs"><button class="btn secondary" onclick="show('customer')">Customer</button><button class="btn" onclick="show('pro')">I'm a Pro</button><button class="btn" onclick="authFlow()">Sign In</button></div></header>
 
 <section class="hero">
 <div><div style="display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.2);padding:7px 11px;border-radius:999px;font-size:12px;font-weight:800">★ TRUSTED LOCAL SERVICES</div><h1 style="margin-top:14px">Find. Book. Get it Done.</h1><p>Book trusted local pros for repairs, maintenance, cleaning, lawn care, yard work, car detailing and more.</p><div class="search">🔎&nbsp; Search for a service, pro, or business</div></div>
@@ -91,13 +91,13 @@
 <div class="card">
 <div class="row"><div><h3>Grass Cutting</h3><div class="muted">Service total</div></div><div class="price">$45</div></div>
 <hr><div class="row"><span>Payment method</span><b>Card ••••</b></div><div class="row" style="margin-top:12px"><span>Payment status</span><span class="status">Ready</span></div>
-<div style="margin-top:18px"><button class="btn" onclick="alert('Secure payment prototype')">Pay Securely</button> <button class="btn secondary" onclick="alert('Refund/cancellation prototype')">Cancellation / Refund</button></div>
+<div style="margin-top:18px"><button class="btn" onclick="startPayment()">Pay Securely</button> <button class="btn secondary" onclick="alert('Refund/cancellation prototype')">Cancellation / Refund</button></div>
 </div>
 
 <h2>Customer & Pro Accounts</h2>
 <div class="grid">
 <div class="card category" onclick="alert('Customer onboarding prototype')"><div class="icon">🏠</div><b>Customer Onboarding</b><div class="muted">Profile, address and booking preferences</div></div>
-<div class="card category" onclick="alert('Pro onboarding prototype')"><div class="icon">🧰</div><b>Pro Onboarding</b><div class="muted">Services, service area and availability</div></div>
+<div class="card category" onclick="startProOnboarding()"><div class="icon">🧰</div><b>Pro Onboarding</b><div class="muted">Services, service area and availability</div></div>
 <div class="card category" onclick="alert('Ratings prototype')"><div class="icon">⭐</div><b>Ratings & Reviews</b><div class="muted">Rate completed jobs</div></div>
 <div class="card category" onclick="alert('Notifications prototype')"><div class="icon">🔔</div><b>Notifications</b><div class="muted">Booking and job updates</div></div>
 </div>
@@ -112,11 +112,99 @@
 <div class="notice" style="margin-top:24px"><b>Prototype note:</b> These screens demonstrate the HandyGo customer/pro experience. Real authentication, database saving, maps, notifications, Stripe payments, Connect payouts, and production booking logic still need to be connected to the backend.</div>
 <div class="footer"><b>HandyGo</b> · Find. Book. Get it Done. · Customers · Pros · Support · © 2026</div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://js.stripe.com/v3/"></script>
 <script>
+const HANDYGO_API = 'https://handygo-backend-6d4o.onrender.com';
+const SUPABASE_URL = 'https://gebdhlrvnrnhwrjnmvwd.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_0hOsj_MLSubO6oG0vq8B3g_nP5CiCRw';
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const STRIPE_PUBLISHABLE_KEY = 'pk_live_51Ua2523j9dOdKbZi_PLACEHOLDER';
+let currentSession = null;
+
+supabaseClient.auth.onAuthStateChange((_event, session) => {
+  currentSession = session;
+  const signInButton = [...document.querySelectorAll('button')].find(b => b.textContent.trim() === 'Sign In');
+  if (signInButton) signInButton.textContent = session ? 'Signed In' : 'Sign In';
+});
+
+async function getSession(){
+  const { data } = await supabaseClient.auth.getSession();
+  currentSession = data.session;
+  return currentSession;
+}
+async function authFlow(){
+  const email = prompt('Enter your email:');
+  if (!email) return;
+  const password = prompt('Enter your password:');
+  if (!password) return;
+  const { data, error } = await supabaseClient.auth.signInWithPassword({email, password});
+  if (error) {
+    const create = confirm('Sign in failed. Create a new HandyGo account with this email?');
+    if (!create) return alert(error.message);
+    const signUp = await supabaseClient.auth.signUp({email, password});
+    if (signUp.error) return alert(signUp.error.message);
+    alert('Account created. Check your email if verification is required, then sign in.');
+    return;
+  }
+  currentSession = data.session;
+  alert('You are signed in to HandyGo.');
+}
 function show(name){alert(name.charAt(0).toUpperCase()+name.slice(1)+' screen — prototype')}
+
 function showService(name){alert(name+' selected — booking flow prototype')}
 function startBooking(pro){alert('Booking '+pro+' — prototype')}
-function createBooking(){const s=document.getElementById('bookService').value;const d=document.getElementById('bookDate').value||'your selected date';const a=document.getElementById('bookAddress').value||'your address';document.getElementById('bookingResult').textContent='Booking requested: '+s+' on '+d+' at '+a+' — prototype only.'}
-function addBusiness(){const n=document.getElementById('bizName').value||'Your business';const s=document.getElementById('bizService').value||'your services';const a=document.getElementById('bizArea').value||'your service area';document.getElementById('bizResult').textContent=n+' is ready to be listed for '+s+' in '+a+' — prototype only.'}
+async function createBooking(){
+  const session = await getSession();
+  if (!session) return alert('Please sign in first.');
+  const s=document.getElementById('bookService').value;
+  const d=document.getElementById('bookDate').value || null;
+  const a=document.getElementById('bookAddress').value || '';
+  if (!a) return alert('Please enter the job address.');
+  const servicesRes = await fetch(HANDYGO_API+'/services');
+  const servicesJson = await servicesRes.json();
+  const service = (servicesJson.services || []).find(x => x.name === s) || null;
+  const response = await fetch(HANDYGO_API+'/jobs',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Authorization':'Bearer '+session.access_token},
+    body:JSON.stringify({title:s+' service',description:'Requested through HandyGo',service_id:service?.id||null,address_text:a,scheduled_start:d?new Date(d+'T12:00:00').toISOString():null})
+  });
+  const json = await response.json();
+  if (!response.ok) return alert(json.error || 'Could not create booking.');
+  document.getElementById('bookingResult').textContent='Booking saved. Job ID: '+json.job.id;
+}
+async function addBusiness(){
+  const session = await getSession();
+  if (!session) return alert('Please sign in first.');
+  const n=document.getElementById('bizName').value.trim();
+  const s=document.getElementById('bizService').value.trim();
+  const a=document.getElementById('bizArea').value.trim();
+  if (!n || !s || !a) return alert('Please fill in all business fields.');
+  const response = await fetch(HANDYGO_API+'/businesses',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Authorization':'Bearer '+session.access_token},
+    body:JSON.stringify({name:n,services:s.split(',').map(x=>x.trim()).filter(Boolean),service_area:a})
+  });
+  const json = await response.json();
+  if (!response.ok) return alert(json.error || 'Could not add your business.');
+  document.getElementById('bizResult').textContent=n+' was submitted to HandyGo for review.';
+}
+async function startProOnboarding(){
+  const session = await getSession();
+  if (!session) return alert('Please sign in first.');
+  const response = await fetch(HANDYGO_API+'/connect/onboarding',{method:'POST',headers:{Authorization:'Bearer '+session.access_token}});
+  const json = await response.json();
+  if (!response.ok) return alert(json.error || 'Provider onboarding is unavailable right now.');
+  window.location.href = json.onboarding_url;
+}
+async function startPayment(){
+  const session = await getSession();
+  if (!session) return alert('Please sign in first.');
+  const response = await fetch(HANDYGO_API+'/jobs',{headers:{Authorization:'Bearer '+session.access_token}});
+  const json = await response.json();
+  const job = (json.jobs||[]).find(j => j.status === 'booked');
+  if (!job) return alert('A booked job with an accepted provider quote is required before payment.');
+  alert('Payment setup is ready on the server. Complete the provider quote first, then payment can be confirmed.');
+}
 </script>
 </body></html>
