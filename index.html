@@ -202,9 +202,35 @@ async function startPayment(){
   if (!session) return alert('Please sign in first.');
   const response = await fetch(HANDYGO_API+'/jobs',{headers:{Authorization:'Bearer '+session.access_token}});
   const json = await response.json();
-  const job = (json.jobs||[]).find(j => j.status === 'booked');
-  if (!job) return alert('A booked job with an accepted provider quote is required before payment.');
-  alert('Payment setup is ready on the server. Complete the provider quote first, then payment can be confirmed.');
+  if (!response.ok) return alert(json.error || 'Could not load your bookings.');
+
+  // Use the most recent real customer job instead of relying on the
+  // prototype's hard-coded payment card. The backend remains the source
+  // of truth and will only create a payment for a genuinely booked job
+  // with an accepted provider quote.
+  const jobs = (json.jobs || []).filter(j => j.customer_id === session.user.id);
+  const job = jobs.find(j => j.status === 'booked') || jobs[0];
+  if (!job) return alert('Create a booking first, then accept a provider quote before paying.');
+
+  const paymentResponse = await fetch(HANDYGO_API+'/payments/create-intent',{
+    method:'POST',
+    headers:{
+      'Content-Type':'application/json',
+      'Authorization':'Bearer '+session.access_token
+    },
+    body:JSON.stringify({job_id:job.id})
+  });
+  const paymentJson = await paymentResponse.json();
+
+  if (!paymentResponse.ok) {
+    return alert(paymentJson.error || 'This booking is not ready for payment yet.');
+  }
+
+  if (!paymentJson.client_secret) {
+    return alert('Payment was created, but the secure payment screen is not available yet.');
+  }
+
+  alert('Secure payment is ready for this booked job.');
 }
 </script>
 </body></html>
