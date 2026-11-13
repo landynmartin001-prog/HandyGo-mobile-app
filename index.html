@@ -131,6 +131,12 @@ supabaseClient.auth.onAuthStateChange((_event, session) => {
 async function getSession(){
   const { data } = await supabaseClient.auth.getSession();
   currentSession = data.session;
+  if (currentSession) {
+    const refreshed = await supabaseClient.auth.refreshSession();
+    if (refreshed.data?.session) {
+      currentSession = refreshed.data.session;
+    }
+  }
   return currentSession;
 }
 async function authFlow(){
@@ -164,12 +170,22 @@ async function createBooking(){
   const servicesRes = await fetch(HANDYGO_API+'/services');
   const servicesJson = await servicesRes.json();
   const service = (servicesJson.services || []).find(x => x.name === s) || null;
-  const response = await fetch(HANDYGO_API+'/jobs',{
+  let response = await fetch(HANDYGO_API+'/jobs',{
     method:'POST',
     headers:{'Content-Type':'application/json','Authorization':'Bearer '+session.access_token},
     body:JSON.stringify({title:s+' service',description:'Requested through HandyGo',service_id:service?.id||null,address_text:a,scheduled_start:d?new Date(d+'T12:00:00').toISOString():null})
   });
-  const json = await response.json();
+  let json = await response.json();
+  if (response.status === 401) {
+    const fresh = await getSession();
+    if (!fresh) return alert('Your session expired. Please sign in again.');
+    response = await fetch(HANDYGO_API+'/jobs',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+fresh.access_token},
+      body:JSON.stringify({title:s+' service',description:'Requested through HandyGo',service_id:service?.id||null,address_text:a,scheduled_start:d?new Date(d+'T12:00:00').toISOString():null})
+    });
+    json = await response.json();
+  }
   if (!response.ok) return alert(json.error || 'Could not create booking.');
   document.getElementById('bookingResult').textContent='Booking saved. Job ID: '+json.job.id;
 }
