@@ -177,14 +177,11 @@ async function createBooking(){
   });
   let json = await response.json();
   if (response.status === 401) {
-    const fresh = await getSession();
-    if (!fresh) return alert('Your session expired. Please sign in again.');
-    response = await fetch(HANDYGO_API+'/jobs',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','Authorization':'Bearer '+fresh.access_token},
-      body:JSON.stringify({title:s+' service',description:'Requested through HandyGo',service_id:service?.id||null,address_text:a,scheduled_start:d?new Date(d+'T12:00:00').toISOString():null})
-    });
-    json = await response.json();
+    // A stale browser session can survive longer than the Supabase access token.
+    // Clear it completely so the next sign-in gets a fresh token for the backend.
+    await supabaseClient.auth.signOut();
+    currentSession = null;
+    return alert('Your HandyGo session expired. Please click Sign In and sign in again, then retry the booking.');
   }
   if (!response.ok) return alert(json.error || 'Could not create booking.');
   document.getElementById('bookingResult').textContent='Booking saved. Job ID: '+json.job.id;
